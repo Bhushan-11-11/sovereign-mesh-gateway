@@ -8,17 +8,17 @@ This diagram visualizes the flow of data through the privacy mesh:
 
 ```mermaid
 sequenceDiagram
-    participant Client as Local Agent
+    participant Client
     participant Gateway as Sovereign Mesh Gateway
-    participant Ollama as Local Model (llama3)
-    participant Cloud as Cloud LLM (Gemini)
+    participant Ollama as Local Model
+    participant Cloud as Cloud LLM
 
-    Client->>Gateway: Send prompt with sensitive data (PII)
-    Gateway->>Ollama: Extract & Mask PII (Local Privacy Filter)
-    Ollama-->>Gateway: Return sanitized prompt & [TAG]->PII mapping
+    Client->>Gateway: Send prompt with PII
+    Gateway->>Ollama: Extract and Mask PII
+    Ollama-->>Gateway: Return sanitized prompt and PII tags
     Gateway->>Cloud: Send sanitized prompt via Cloud API
-    Cloud-->>Gateway: Return generated response
-    Gateway->>Gateway: Restore original PII from tags (De-anonymize)
+    Cloud-->>Gateway: Return response
+    Gateway->>Gateway: Restore original PII from tags
     Gateway-->>Client: Final Response
 ```
 
